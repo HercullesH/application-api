@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Application {
+  id            Int       @id @default(autoincrement())
+  amount    Float
+  status  type_status_enum @default(Pending)
+  created_at     DateTime? @default(now()) @db.Timestamp(6)
+  updated_at     DateTime? @default(now()) @db.Timestamp(6)
+  deleted       Boolean   @default(false)
+  user_id       Int?
+  users         User?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("applications")
+}
+
+model User {
+  id         Int            @id @default(autoincrement())
+  name       String         @db.VarChar
+  email      String         @db.VarChar
+  type_user  type_user_enum
+  password   String         @db.VarChar
+  created_at DateTime?      @default(now()) @db.Timestamp(6)
+  updated_at DateTime?      @default(now()) @db.Timestamp(6)
+  deleted    Boolean        @default(false)
+  applications   Application[]
+
+  @@map("users")
+}
+
+enum type_user_enum {
+  Applicant
+  Admin
+}
+
+enum type_status_enum {
+  Approved
+  Rejected
+  Pending
+}

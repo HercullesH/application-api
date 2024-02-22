@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  app:
+    container_name: application-api
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3001:3001'
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://postgres:101010@application-db:5432/application?schema=public
+    # command: bash -c "npx prisma migrate dev --name init && npx prisma db seed && npm run start:dev"
+    command: bash -c "npx prisma migrate dev && npm run start:dev"
+
+  # PostgreSQL service
+  db:
+    image: postgres:latest
+    container_name: application-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=101010
+      - POSTGRES_DB=application
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
