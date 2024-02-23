@@ -14,6 +14,13 @@ All API documentation is available on Swagger through this link: [http://localho
 
 Check the schemas on swagger to understand how to use the API.
 
+To log in on the application use auth/login
+
+copy and put the token on header of the request with the name`authorization`.
+
+The value should be 'Bearer <token>'
+Example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJIZXJjdWxsZXMgMSIsImVtYWlsIjoieEBnbWFpbC5jb20iLCJpYXQiOjE3MDg2Mjc4MjQsImF1ZCI6InVzZXJzIiwiaXNzIjoibG9naW4ifQ.XLenVNRdsvnjJttytHBWTvSuJPxGJZ1lH5o9oZ6bWoU
+
 
 To run without Docker:
 
